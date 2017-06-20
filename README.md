@@ -1,4 +1,4 @@
-[![][logo.png]][https://www.blockwallet.eu]
+[![][https://www.blockwallet.eu]][logo.png]
 
 Block Wallet is a easy to use and secure Ethereum App.
 
