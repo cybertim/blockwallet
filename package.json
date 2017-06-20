@@ -1,0 +1,22 @@
+{
+  "name": "walletlib",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "",
+  "devDependencies": {
+    "@types/node": "^7.0.31",
+    "@types/sjcl": "^1.0.28",
+    "typescript": "^2.3.4"
+  },
+  "dependencies": {
+    "bip39": "^2.3.1",
+    "get-random-values": "^1.2.0",
+    "js-sha3": "^0.5.7",
+    "rlp": "^2.0.0",
+    "secp256k1": "^3.3.0",
+    "sjcl": "^1.0.6"
+  }
+}

@@ -1,0 +1,8 @@
+//
+// Copy to config.ts and replace with own values
+//
+export const config = {
+    USERNAME: 'joe',
+    PASSWORD: 'secret',
+    DOMAIN: 'https://rpc.mygethrpcservice.domain/'
+}
