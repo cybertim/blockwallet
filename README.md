@@ -13,5 +13,5 @@ In this repo you will find the library used by the iOS and Android App. It conta
   - Private Key only decoded when needed - protected with a custom passcode only the owner knows
   - Uses [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) Mnemonic code for Recovery of Private Keys
   - Implemented [EIP55](https://github.com/ethereum/EIPs/issues/55) capitals-based checksum on send addresses
-  - Using QR Codes and Scanner with checksum to prevent typing errors
+  - Using QR Codes and Scanner with checksum to prevent typo errors
 
