@@ -1,0 +1,19 @@
+{
+  "name": "keytools",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "browserify src/script.ts -p [ tsify --noImplicitAny ] > web/script.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bip39": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.2.4",
+    "browserify": "^14.4.0",
+    "tsify": "^3.0.1",
+    "typescript": "^2.3.4"
+  }
+}

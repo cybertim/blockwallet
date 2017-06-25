@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIP39 Recovery</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery.min.js"></script>
+    <!--<script src="require.js"></script>-->
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        Recovery Phrase<br/>
+        <textarea rows="3" cols="80" placeholder="Enter your recovery phrase from blockwallet" id="phrase"></textarea>
+    </div>
+    <div class="main">
+        Private Key<br/> 0x
+        <input size="64" type="text" id="key" readonly>
+    </div>
+    <div class="info">
+        <span class="warning">Attention</span> This page runs as a javascript application in your current browser session, it does not communicate with other services.
+        Though it is adviced to disconnect your computer temporarily from the internet while using this page. The browser
+        can still run other party applications (like web extensions or malware). You can also run it locally by downloading the source from <a href="https://github.com/cybertim/blockwallet">GitHub</a>
+    </div>
+</body>
+
+
+</html>

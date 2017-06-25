@@ -1,0 +1,32 @@
+body {
+    font-family: arial;
+}
+input {
+    font-size: 22px;
+}
+textarea {
+    font-size: 22px;
+}
+
+.main {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+p {
+    font-size: 1rem;
+}
+
+.warning {
+    color: #cc6e31;
+    font-weight: bold;
+}
+.info {
+    padding: 10px;
+    padding-top: 24px;
+    color: #777;
+    font-size: 1rem;
+}
