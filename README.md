@@ -6,6 +6,7 @@ Block Wallet is a easy to use and secure Ethereum App.
 In this repo you will find the library used by the iOS and Android App. It contains all code which is used to generate, store and sign the transactions. All RPC call implementations are included used by the Apps. All encryption is based on peer reviewed and well known libraries.
 
 ### Handy Features
+  - Use the ./keytools or visit [Blockwallet/keytools](https://www.blockwallet.eu/keytools/) to view your private key behind the recovery phrase
   - Uses Cryptocompare.com to convert ETH to your local currency
   - Uses Etherscan.io to retrieve new Transactions for your address
 
