@@ -7,8 +7,8 @@ In this repo you will find the library used by the iOS and Android App. It conta
 
 ### Handy Features
   - Use the ./keytools or visit [Blockwallet/keytools](https://www.blockwallet.eu/keytools/) to view your private key behind the recovery phrase
-  - Uses Cryptocompare.com to convert ETH to your local currency
-  - Uses Etherscan.io to retrieve new Transactions for your address
+  - Uses [Cryptocompare.com](https://cryptocompare.com) to convert ETH to your local currency
+  - Uses [Etherscan.io](https://etherscan.io) to retrieve new Transactions for your address
 
 ### Security Highlights
   - Signs transactions on the device itself
