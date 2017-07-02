@@ -55,11 +55,25 @@ const ID = 1;
 export class RPCManager {
   constructor() { }
 
-  private hexxer(hex: string, empty?: boolean) {
+  private cleanhex(hex: string) {
     let v = hex.substr(0, 2) === '0x' ? hex.substr(2) : hex;
-    v = v.length % 2 !== 0 ? '0' + v : v;
+    return v.length % 2 !== 0 ? '0' + v : v;
+  }
+
+  private hexxer(hex: string, empty?: boolean) {
+    const v = this.cleanhex(hex);
     if (!empty) return '0x' + v;
     else v === '00' ? '' : '0x' + v;
+  }
+
+  public balanceOf(token: string, address: string) {
+    const v = this.cleanhex(address);
+    return this.doHTTPCall<IReply>({
+      id: ID,
+      jsonrpc: JSONRPC,
+      method: 'eth_call',
+      params: [{ 'to': this.hexxer(token), 'data': this.hexxer('70a08231000000000000000000000000' + v) }]
+    });
   }
 
   public gasPrice() {
@@ -143,7 +157,6 @@ export class RPCManager {
 
   private fingerprint(domain: string, fingerprints: string[]): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      // const fingerprints = ["89 10 24 09 12 DD 61 7C 31 71 03 D7 03 9C 89 DA DA EF 2F 17 34 94 AE 35 21 AE 95 46 BF F9 E8 22", "5A 78 65 89 62 56 54 03 2C 6B 47 06 B8 D1 B7 6A C4 A7 13 33"];
       (<any>window).plugins.sslCertificateChecker.check(
         (msg) => {
           resolve(true);
