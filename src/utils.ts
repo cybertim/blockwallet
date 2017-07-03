@@ -120,6 +120,11 @@ export class UtilManager {
         return privKey;
     }
 
+    public hexToASCII(hex: string) {
+        const b = new Buffer(hex,'hex');
+        return b.toString();
+    }
+
     public decimalToHex(value: number) {
         let v = value.toString(16);
         v = v.length % 2 !== 0 ? '0' + v : v;

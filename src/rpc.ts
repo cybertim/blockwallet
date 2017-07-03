@@ -66,13 +66,43 @@ export class RPCManager {
     else v === '00' ? '' : '0x' + v;
   }
 
-  public balanceOf(token: string, address: string) {
+  // thanks to this awesome post:
+  // https://ethereum.stackexchange.com/questions/9034/how-can-i-retrieve-my-accounts-augur-rep-token-balance-via-json-rpc
+  // web3 is an easy way to translate so-calls to data addresses 
+  public erc20Name(token: string) {
+    return this.doHTTPCall<IReply>({
+      id: ID,
+      jsonrpc: JSONRPC,
+      method: 'eth_call',
+      params: [{ 'to': this.hexxer(token), 'data': this.hexxer('06fdde03') }, 'latest']
+    });
+  }
+
+  public erc20Decimals(token: string) {
+    return this.doHTTPCall<IReply>({
+      id: ID,
+      jsonrpc: JSONRPC,
+      method: 'eth_call',
+      params: [{ 'to': this.hexxer(token), 'data': this.hexxer('313ce567') }, 'latest']
+    });
+  }
+
+  public erc20Symbol(token: string) {
+    return this.doHTTPCall<IReply>({
+      id: ID,
+      jsonrpc: JSONRPC,
+      method: 'eth_call',
+      params: [{ 'to': this.hexxer(token), 'data': this.hexxer('95d89b41') }, 'latest']
+    });
+  }
+
+  public erc20BalanceOf(token: string, address: string) {
     const v = this.cleanhex(address);
     return this.doHTTPCall<IReply>({
       id: ID,
       jsonrpc: JSONRPC,
       method: 'eth_call',
-      params: [{ 'to': this.hexxer(token), 'data': this.hexxer('70a08231000000000000000000000000' + v) }]
+      params: [{ 'to': this.hexxer(token), 'data': this.hexxer('70a08231000000000000000000000000' + v) }, 'latest']
     });
   }
 
@@ -176,6 +206,9 @@ export class RPCManager {
   private call(url: string, method: string, login?: boolean, postData?: IRequest): Promise<string> {
     return new Promise((resolve, reject) => {
       try {
+        // uncomment if testing direct on NodeJS
+        var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
         let req = new XMLHttpRequest();
         req.open(method, url);
         req.ontimeout = () => {

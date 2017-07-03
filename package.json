@@ -9,7 +9,8 @@
   "devDependencies": {
     "@types/node": "^7.0.31",
     "@types/sjcl": "^1.0.28",
-    "typescript": "^2.3.4"
+    "typescript": "^2.4.1",
+    "xmlhttprequest": "^1.8.0"
   },
   "dependencies": {
     "bip39": "^2.3.1",
