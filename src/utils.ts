@@ -121,8 +121,14 @@ export class UtilManager {
     }
 
     public hexToASCII(hex: string) {
-        const b = new Buffer(hex,'hex');
-        return b.toString();
+        hex = hex.toString();
+        var str = '';
+        for (var i = 0; i < hex.length; i += 2) {
+            if (hex.substr(i, 2) !== '00') {
+                str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+            }
+        }
+        return str.trim().substr(1);
     }
 
     public decimalToHex(value: number) {

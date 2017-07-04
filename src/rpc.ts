@@ -160,6 +160,17 @@ export class RPCManager {
     });
   }
 
+  public cryptoCompareTokens(tkns: string[]): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = await this.call('https://min-api.cryptocompare.com/data/pricemulti?fsyms=' + tkns.join() + '&tsyms=ETH', 'GET');
+        resolve(JSON.parse(data));
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
   public cryptoCompareETH(): Promise<ICComp> {
     return new Promise(async (resolve, reject) => {
       try {
