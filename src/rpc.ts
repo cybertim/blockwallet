@@ -9,6 +9,15 @@ export interface IRequest {
   id: number;
 }
 
+export interface IRTokens {
+  tokens: {
+    name: string;
+    symbol: string;
+    address: string;
+    decimals: number;
+  }[];
+}
+
 export interface IReply {
   id: number;
   result: string;
@@ -47,7 +56,8 @@ export interface ITReceiptReply {
   }
 }
 
-export interface ICComp { 'BTC': number, 'USD': number, 'EUR': number, 'GBP': number, 'CAD': number }
+export interface ICComp { 'RUB': number, 'BTC': number, 'USD': number, 'EUR': number, 'GBP': number, 'CAD': number, 'BRL': number, 'CNY': number, 'HKD': number, 'AUD': number, 'INR': number, 'CHF': number, 'SGD': number, 'JPY': number }
+const CURRENCIES = 'RUB,BTC,USD,EUR,CAD,GBP,BRL,CNY,HKD,AUD,INR,CHF,SGD,JPY';
 
 const JSONRPC = '2.0';
 const ID = 1;
@@ -174,7 +184,18 @@ export class RPCManager {
   public cryptoCompareETH(): Promise<ICComp> {
     return new Promise(async (resolve, reject) => {
       try {
-        const data = await this.call('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR,CAD,GBP', 'GET');
+        const data = await this.call('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=' + CURRENCIES, 'GET');
+        resolve(JSON.parse(data));
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  public getTokens(): Promise<IRTokens> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = await this.call('https://www.blockwallet.eu/tokens.json', 'GET');
         resolve(JSON.parse(data));
       } catch (err) {
         reject(err);

@@ -6,8 +6,7 @@ import * as bip39 from 'bip39';
 import * as sjcl from 'sjcl';
 
 const UNCOMPRESSED_PUBKEY_HEADER = 37; // https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v/38909#38909
-const CHAIN_ID = 1; // EIP 155 chainId - mainnet: 1, ropsten: 3
-const ETHER = 1000000000000000000;
+const ETHER = 10 ** 18;
 
 export interface TxEther {
     nonce: string;
