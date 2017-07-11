@@ -116,6 +116,16 @@ export class RPCManager {
     });
   }
 
+  // good medium post about transfer call
+  // https://medium.com/@Dave_Appleton/erc20-coins-and-the-multisig-wallet-acc3b43e2137
+  public erc20TransferData(to: string, amount: string) {
+    const v = this.cleanhex(to);
+    const a = this.cleanhex(amount);
+    let o = '';
+    for (let i = 0; i < (64 - a.length); i++) o += '0';
+    return this.hexxer('a9059cbb000000000000000000000000' + v + o + a);
+  }
+
   public gasPrice() {
     return this.doHTTPCall<IReply>({
       id: ID,
