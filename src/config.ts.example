@@ -4,5 +4,6 @@
 export const config = {
     USERNAME: 'joe',
     PASSWORD: 'secret',
-    DOMAIN: 'https://rpc.mygethrpcservice.domain/'
+    DOMAIN: 'https://rpc.mygethrpcservice.domain/',
+    CHAIN: 1
 }

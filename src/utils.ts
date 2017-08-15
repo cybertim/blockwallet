@@ -6,7 +6,6 @@ import * as bip39 from 'bip39';
 import * as sjcl from 'sjcl';
 
 const UNCOMPRESSED_PUBKEY_HEADER = 37; // https://bitcoin.stackexchange.com/questions/38351/ecdsa-v-r-s-what-is-v/38909#38909
-const CHAIN_ID = 1; // EIP 155 chainId - mainnet: 1, ropsten: 3
 const ETHER = 10 ** 18;
 
 export interface TxEther {
@@ -68,14 +67,14 @@ export class UtilManager {
         return RLP.encode(raw).toString('hex');
     }
 
-    public publicKeyFromSignedHex(z: string) {
+    public publicKeyFromSignedHex(z: string, chain?: number) {
         let raw = RLP.decode(Buffer.from(z, 'hex'));
         const vrs: VRS = {
             s: raw.pop(),
             r: raw.pop(),
             v: this.hexToDecimal(raw.pop().toString('hex'))
         }
-        raw.push(Buffer.from(this.decimalToHex(CHAIN_ID), 'hex')); // chain_id
+        raw.push(Buffer.from(this.decimalToHex(chain), 'hex')); // chain_id
         raw.push(new Buffer([])); // empty r
         raw.push(new Buffer([])); // empty s
 

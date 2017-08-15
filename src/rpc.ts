@@ -60,10 +60,19 @@ export interface ICComp { 'RUB': number, 'BTC': number, 'USD': number, 'EUR': nu
 const CURRENCIES = 'RUB,BTC,USD,EUR,CAD,GBP,BRL,CNY,HKD,AUD,INR,CHF,SGD,JPY';
 
 const JSONRPC = '2.0';
-const ID = 1;
 
 export class RPCManager {
-  constructor() { }
+  public host;
+  public username;
+  public password;
+  public chain;
+
+  constructor() {
+    this.host = config.DOMAIN;
+    this.username = config.USERNAME;
+    this.password = config.PASSWORD;
+    this.chain = config.CHAIN;
+  }
 
   private cleanhex(hex: string) {
     let v = hex.substr(0, 2) === '0x' ? hex.substr(2) : hex;
@@ -81,7 +90,7 @@ export class RPCManager {
   // web3 is an easy way to translate so-calls to data addresses 
   public erc20Name(token: string) {
     return this.doHTTPCall<IReply>({
-      id: ID,
+      id: this.chain,
       jsonrpc: JSONRPC,
       method: 'eth_call',
       params: [{ 'to': this.hexxer(token), 'data': this.hexxer('06fdde03') }, 'latest']
@@ -90,7 +99,7 @@ export class RPCManager {
 
   public erc20Decimals(token: string) {
     return this.doHTTPCall<IReply>({
-      id: ID,
+      id: this.chain,
       jsonrpc: JSONRPC,
       method: 'eth_call',
       params: [{ 'to': this.hexxer(token), 'data': this.hexxer('313ce567') }, 'latest']
@@ -99,7 +108,7 @@ export class RPCManager {
 
   public erc20Symbol(token: string) {
     return this.doHTTPCall<IReply>({
-      id: ID,
+      id: this.chain,
       jsonrpc: JSONRPC,
       method: 'eth_call',
       params: [{ 'to': this.hexxer(token), 'data': this.hexxer('95d89b41') }, 'latest']
@@ -109,7 +118,7 @@ export class RPCManager {
   public erc20BalanceOf(token: string, address: string) {
     const v = this.cleanhex(address);
     return this.doHTTPCall<IReply>({
-      id: ID,
+      id: this.chain,
       jsonrpc: JSONRPC,
       method: 'eth_call',
       params: [{ 'to': this.hexxer(token), 'data': this.hexxer('70a08231000000000000000000000000' + v) }, 'latest']
@@ -128,7 +137,7 @@ export class RPCManager {
 
   public gasPrice() {
     return this.doHTTPCall<IReply>({
-      id: ID,
+      id: this.chain,
       jsonrpc: JSONRPC,
       method: 'eth_gasPrice',
       params: []
@@ -137,7 +146,7 @@ export class RPCManager {
 
   public getBalance(address: string) {
     return this.doHTTPCall<IReply>({
-      id: ID,
+      id: this.chain,
       jsonrpc: JSONRPC,
       method: 'eth_getBalance',
       params: [this.hexxer(address), 'latest']
@@ -146,7 +155,7 @@ export class RPCManager {
 
   public getTransactionCount(address: string) {
     return this.doHTTPCall<IReply>({
-      id: ID,
+      id: this.chain,
       jsonrpc: JSONRPC,
       method: 'eth_getTransactionCount',
       params: [this.hexxer(address), 'pending']
@@ -155,7 +164,7 @@ export class RPCManager {
 
   public sendRawTransaction(raw: string) {
     return this.doHTTPCall<IReply>({
-      id: ID,
+      id: this.chain,
       jsonrpc: JSONRPC,
       method: 'eth_sendRawTransaction',
       params: [this.hexxer(raw)]
@@ -164,7 +173,7 @@ export class RPCManager {
 
   public getTransactionByHash(hash: string) {
     return this.doHTTPCall<ITHashReply>({
-      id: ID,
+      id: this.chain,
       jsonrpc: JSONRPC,
       method: 'eth_getTransactionByHash',
       params: [this.hexxer(hash)]
@@ -173,7 +182,7 @@ export class RPCManager {
 
   public getTransactionReceipt(transaction: string) {
     return this.doHTTPCall<ITReceiptReply>({
-      id: ID,
+      id: this.chain,
       jsonrpc: JSONRPC,
       method: 'eth_getTransactionReceipt',
       params: [this.hexxer(transaction)]
@@ -215,7 +224,7 @@ export class RPCManager {
 
   public estimateGas(to: string, gas: string, gasPrice: string, value: string) {
     return this.doHTTPCall<IReply>({
-      id: ID,
+      id: this.chain,
       jsonrpc: JSONRPC,
       method: 'eth_estimateGas',
       params: [{
@@ -264,7 +273,7 @@ export class RPCManager {
         req.timeout = TIMEOUT;
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.setRequestHeader('Accept', 'application/json');
-        if (login) req.setRequestHeader('Authorization', 'Basic ' + new Buffer(config.USERNAME + ':' + config.PASSWORD).toString('base64'));
+        if (login) req.setRequestHeader('Authorization', 'Basic ' + new Buffer(this.username + ':' + this.password).toString('base64'));
         req.onreadystatechange = () => {
           if (!req || req.readyState !== 4 || req.status === 0) return;
           resolve(req.responseText);
@@ -280,7 +289,7 @@ export class RPCManager {
   private doHTTPCall<T>(postData: IRequest): Promise<T> {
     return new Promise(async (resolve, reject) => {
       try {
-        resolve(JSON.parse(await this.call(config.DOMAIN, 'POST', true, postData)));
+        resolve(JSON.parse(await this.call(this.host, 'POST', true, postData)));
       } catch (err) {
         reject(err);
       }
