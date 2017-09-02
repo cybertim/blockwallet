@@ -179,6 +179,20 @@ export class UtilManager {
             return true;
         }
     }
+    
+    public toChecksumAddress(address: string) {
+        address = address.toLowerCase().replace('0x', '');
+        const hash = keccak_256(address);
+        let ret = '0x';
+        for (var i = 0; i < address.length; i++) {
+            if (parseInt(hash[i], 16) >= 8) {
+                ret += address[i].toUpperCase();
+            } else {
+                ret += address[i];
+            }
+        }
+        return ret;
+    }
 
     public encrypt(message: string, password: string): sjcl.SjclCipherEncrypted {
         try {
