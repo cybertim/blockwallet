@@ -132,7 +132,7 @@ export class RPCManager {
     const a = this.cleanhex(amount);
     let o = '';
     for (let i = 0; i < (64 - a.length); i++) o += '0';
-    return this.hexxer('a9059cbb000000000000000000000000' + v + o + a);
+    return this.cleanhex('a9059cbb000000000000000000000000' + v + o + a);
   }
 
   public gasPrice() {
@@ -192,7 +192,7 @@ export class RPCManager {
   public cryptoCompareTokens(tkns: string[]): Promise<any> {
     return new Promise(async (resolve, reject) => {
       try {
-        const data = await this.call('https://min-api.cryptocompare.com/data/pricemulti?fsyms=' + tkns.join() + '&tsyms=ETH', 'GET');
+        const data = await this.call('https://min-api.cryptocompare.com/data/pricemulti?fsyms=' + tkns.join(',') + '&tsyms=ETH', 'GET');
         resolve(JSON.parse(data));
       } catch (err) {
         reject(err);

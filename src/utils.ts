@@ -43,9 +43,11 @@ export class UtilManager {
     public sign(tx: TxEther, privateKey: string): string {
         let raw = [];
         for (let k in tx) {
+            let m: Buffer;
             let v = tx[k].length % 2 !== 0 ? '0' + tx[k] : tx[k];
-            if (v === '00' || v === '') raw.push(new Buffer([]));
-            else raw.push(Buffer.from(v, 'hex'));
+            if (v === '00' || v === '') m = new Buffer([]);
+            else m = Buffer.from(v, 'hex');
+            raw.push(m);
         }
         // EIP155 spec:
         // when computing the hash of a transaction for purposes of signing or recovering,
@@ -68,6 +70,7 @@ export class UtilManager {
     }
 
     public publicKeyFromSignedHex(z: string, chain?: number) {
+        if (!chain) chain = 1;
         let raw = RLP.decode(Buffer.from(z, 'hex'));
         const vrs: VRS = {
             s: raw.pop(),
@@ -179,7 +182,7 @@ export class UtilManager {
             return true;
         }
     }
-    
+
     public toChecksumAddress(address: string) {
         address = address.toLowerCase().replace('0x', '');
         const hash = keccak_256(address);
