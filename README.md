@@ -1,3 +1,7 @@
+# DISCONTINUED!
+Blockwallet.eu (site) does not exist anymore and all apps have been pulled from the appstores.
+You can still use the keytools (in this repo) to retrieve your private key from the secret words if necessary.
+
 [![alt text](logo.png)](https://www.blockwallet.eu)
 
 Block Wallet is a easy to use and secure Ethereum App.
